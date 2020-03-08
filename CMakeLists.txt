@@ -23,3 +23,10 @@ target_link_libraries(glcompute_sample
     sfml-window
     libglw
 )
+
+target_include_directories(glcompute_sample PRIVATE "${CMAKE_SOURCE_DIR}/include")
+
+set_target_properties(glcompute_sample PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+)
