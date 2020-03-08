@@ -10,11 +10,16 @@ file(GLOB PROJECT_SRC
     "src/*.cpp"
     "include/*.h"
 )
+add_subdirectory(deps/libglw)
+
+set(LIBGLW_LIBRARY_ONLY ON CACHE BOOL "RESERVED" FORCE)
 
 add_executable(glcompute_sample ${PROJECT_SRC})
+add_dependencies(glcompute_sample libglw)
 
 target_link_libraries(glcompute_sample 
     glm
     GLEW::GLEW
     sfml-window
+    libglw
 )
