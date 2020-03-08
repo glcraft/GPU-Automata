@@ -9,7 +9,7 @@ void MainGame::init()
     if (int code=glewInit(); code!=GLEW_OK)
         throw MyException("glew did not init properly.", code, "GLEW");
     if (!GLEW_ARB_compute_shader)
-        throw MyException("glew did not init properly.", {}, "GLEW");
+        throw MyException("GL Compute shader not available.", {}, "GLEW");
 }
 void MainGame::display()
 {
