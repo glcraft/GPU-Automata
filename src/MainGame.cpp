@@ -10,6 +10,29 @@ void MainGame::init()
         throw MyException("glew did not init properly.", code, "GLEW");
     if (!GLEW_ARB_compute_shader)
         throw MyException("GL Compute shader not available.", {}, "GLEW");
+
+    {
+        auto v = gl::sl::ComputeProgram::GetMaxWorkgroupCount();
+        std::ostringstream ostr;
+        ostr << "GetMaxWorkgroupCount: " << v.x << ", " << v.y << ", " << v.z << '\n';
+        v = gl::sl::ComputeProgram::GetMaxWorkgroupSize();
+        ostr << "GetMaxWorkgroupSize: " << v.x << ", " << v.y << ", " << v.z << '\n';
+        throw MyException(ostr.str(), {}, "test");
+    }
+    try
+    {
+        m_cshader << gl::sl::Shader<gl::sl::Compute>("res/shaders/compute.comp") << gl::sl::link;
+    }
+    catch(const gl::sl::CompileException& e)
+    {
+        throw MyException(e.what(), {}, "Compute shader compilation");
+    }
+    catch(const gl::sl::Program::LinkException& e)
+    {
+        throw MyException(e.what(), {}, "Compute shader linking");
+    }
+    
+    
 }
 void MainGame::display()
 {
