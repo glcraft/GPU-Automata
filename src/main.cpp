@@ -16,7 +16,7 @@ int main()
     catch(const MyException& exc)
     {
 #ifdef _WIN32
-        MessageBoxA(nullptr, exc.what(), "Runtime error", MB_OK|MB_ICONEXCLAMATION);
+        MessageBoxA(nullptr, exc.what().c_str(), exc.type().c_str(), MB_OK|MB_ICONEXCLAMATION);
 #else
         std::cerr << exc.what();
 #endif
