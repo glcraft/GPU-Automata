@@ -19,20 +19,7 @@ void MainGame::init()
         ostr << "GetMaxWorkgroupSize: " << v.x << ", " << v.y << ", " << v.z << '\n';
         throw MyException(ostr.str(), {}, "test");
     }
-    try
-    {
-        m_cshader << gl::sl::Shader<gl::sl::Compute>("res/shaders/compute.comp") << gl::sl::link;
-    }
-    catch(const gl::sl::CompileException& e)
-    {
-        throw MyException(e.what(), {}, "Compute shader compilation");
-    }
-    catch(const gl::sl::Program::LinkException& e)
-    {
-        throw MyException(e.what(), {}, "Compute shader linking");
-    }
-    
-    
+    m_auto.init();
 }
 void MainGame::display()
 {
@@ -53,9 +40,11 @@ void MainGame::display()
                 glViewport(0,0,m_window->getSize().x,m_window->getSize().y);
             }
         }
+        m_auto.update();
         if (m_window->isOpen() && !pause)
         {
             glClear(GL_COLOR_BUFFER_BIT);
+            m_auto.draw();
             m_window->display();
         }
     }
